@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte'
 	import Router from 'svelte-spa-router'
 	import GbSprite from './lib/GbSprite.svelte'
-	import ColorPicker from './lib/color-picker/ColorPicker.svelte'
+	import AppBar from './lib/AppBar.svelte'
 	import Start from './routes/Start.svelte'
 	import P1 from './routes/P1.svelte'
 	import P2 from './routes/P2.svelte'
@@ -17,7 +17,7 @@
 </script>
 
 
-
+<AppBar />
 <main data-theme="" class="main">
 	<Router {routes} />
 </main>
