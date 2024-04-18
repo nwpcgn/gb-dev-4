@@ -1,7 +1,7 @@
 <script>
 	import { TabControl, TabControlItem } from 'renderless-svelte'
 	import GbImages from './GbImages.svelte'
-	import GbSprite from './GbSprite.svelte'
+
 	import { colorPalette } from './'
 		let imgList = [
 		{
@@ -187,7 +187,7 @@ $: calcScale(frameW)
 
 </script>
 
-<GbSprite />
+
 <article bind:clientWidth={frameW} class="absolute inset-0 overflow-hidden flex flex-col">
 	<TabControl>
 		<div class="content tabs tabs-bordered" slot="tabs" let:tabs>
