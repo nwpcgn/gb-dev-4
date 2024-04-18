@@ -1,0 +1,33 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.nwp-header {
+	@apply py-8 space-y-4;
+}
+.nwp-header h1 {
+	@apply text-5xl font-bold;
+}
+.nwp-header h4 {
+	@apply text-2xl italic text-neutral-500;
+}
+.nwp-header h3 {
+	@apply text-3xl font-bold;
+}
+.nwp-header h5 {
+	@apply text-xl italic text-neutral-500;
+}
+
+.nwp-icon {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	stroke-width: 0;
+	stroke: currentColor;
+	fill: currentColor;
+}
+.nwp-icon-20 {
+	font-size: 22px;
+}
