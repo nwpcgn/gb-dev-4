@@ -2,6 +2,7 @@
 <script>
     import {location} from 'svelte-spa-router'
     let value = document.title
+    let open = false
     function setT() {
         setTimeout(() => {
             value = document.title

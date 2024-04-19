@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte'
+	import {theme} from './lib'
 	import Router from 'svelte-spa-router'
 	import GbSprite from './lib/GbSprite.svelte'
 	import AppBar from './lib/AppBar.svelte'
@@ -12,13 +13,14 @@
 		'*': Start 
 	}
 	onMount(() => {
+		theme.set("cyberpunk")
 		console.log('hi')
 	})
 </script>
 
 
 <AppBar />
-<main data-theme="" class="main">
+<main data-theme={$theme} class="main">
 	<Router {routes} />
 </main>
 <GbSprite />

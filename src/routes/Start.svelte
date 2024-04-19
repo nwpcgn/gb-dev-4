@@ -1,4 +1,5 @@
 <script>
+    import Switch from '../lib/ThemeSwitch.svelte'
     let data = {
         name: 'NWP-Studio',
         sub: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
@@ -17,5 +18,9 @@
                 <a href="#/p2" class="btn btn-neutral btn-sm">Gameboy 2</a>
             </div>
         </header>
+    </article>
+    <article class="content nwp-header">
+        <h3>Theme</h3>
+        <Switch />
     </article>
 </section>

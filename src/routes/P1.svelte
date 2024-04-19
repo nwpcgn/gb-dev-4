@@ -4,6 +4,9 @@
         sub: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
     }
     let menuGroup = ''
+    let showBattle = false
+    let showChatbox = false
+    let showMenu = false
 </script>
 
 <svelte:head><title>nwp-studio gb-4-2</title></svelte:head>
@@ -13,9 +16,9 @@
     <label for="trigger-chatbox" class="btn btn-neutral">Chatbox</label>
 </div>
 <article class="gb4" data-theme="light">
-    <input class="sr-only trigger-chatbox" id="trigger-chatbox" type="checkbox" data-pg-name="TriggerChatbox"/>
+    <input class="sr-only trigger-chatbox" bind:checked={showChatbox} id="trigger-chatbox" type="checkbox" data-pg-name="TriggerChatbox"/>
     <div class="layers">
-        <input class="sr-only trigger-layer" id="trigger-layer" type="checkbox" data-pg-name="TriggerLayer"/>
+        <input class="sr-only trigger-layer" bind:checked={showBattle} id="trigger-layer" type="checkbox" data-pg-name="TriggerLayer"/>
         <section class="gb-layer opponent">
             <div class="gb-info">
                 <div class="gb-balls"><!--x  --></div>
@@ -60,12 +63,12 @@
         </section>
     </div>
     <div class="windows">
-        <input class="panel-menu sr-only" id="panel-menu" type="checkbox"/>
+        <input class="panel-menu sr-only" bind:checked={showMenu} id="panel-menu" type="checkbox"/>
         <input class="panel-fight sr-only" value="fight" bind:group={menuGroup} id="panel-fight" type="radio"/>
         <input class="panel-item sr-only" value="item" bind:group={menuGroup} id="panel-item" type="radio"/>
         <input class="panel-pkmn sr-only" value="pkmn" bind:group={menuGroup} id="panel-pkmn" type="radio"/>
         <input class="panel-run sr-only" value="run" bind:group={menuGroup} id="panel-run" type="radio"/>
-        <input class="panel-run sr-only" value="menu" bind:group={menuGroup} id="panel-cancel" type="radio"/>
+        <input class="panel-run sr-only" value="" bind:group={menuGroup} id="panel-cancel" type="radio"/>
         <div data-name="texts" class="window texts">
             <div class="gb-textbox">
                 <label class="text truncate" for="panel-menu"><span>Welcome to Nwp-studio</span>
