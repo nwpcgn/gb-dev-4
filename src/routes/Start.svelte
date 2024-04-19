@@ -4,6 +4,9 @@
         sub: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
     }
 </script>
+
+<svelte:head><title>nwp-studio</title></svelte:head>
+
 <section class="layer">
     <article class="content">
         <header class="nwp-header">

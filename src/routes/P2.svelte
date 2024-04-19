@@ -5,6 +5,8 @@
     }
 </script>
 
+<svelte:head><title>nwp-studio gb-v4-1</title></svelte:head>
+
 
 <div class="absolute flex gap-1 left-4 nwp-gb top-4">
     <label for="trigger-layer" class="btn btn-neutral">Layer</label>
