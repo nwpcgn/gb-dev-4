@@ -3,6 +3,7 @@
         name: 'NWP-GB 1',
         sub: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
     }
+    let menuGroup = ''
 </script>
 
 
@@ -16,9 +17,7 @@
         <input class="sr-only trigger-layer" id="trigger-layer" type="checkbox" data-pg-name="TriggerLayer"/>
         <section class="gb-layer opponent">
             <div class="gb-info">
-                <div class="gb-balls">
-                    <!-- <img src="/img/gb/blue_balls.svg" alt="" /> -->
-                </div>
+                <div class="gb-balls"><!--x  --></div>
                 <div class="gb-stats">
                     <div class="uppercase">eevee</div>
                     <div>
@@ -27,18 +26,12 @@
                 </div>
             </div>
             <figure class="gb-images">
-                <!-- <img src="/img/gb/eevee_front.svg" alt="" class="battle" /> -->
                 <svg class="battle">
                     <use xlink:href="#eevee_front"></use>
                 </svg>
                 <svg class="trainer">
                     <use xlink:href="#blue_front"></use>
                 </svg>
-                <!-- <img
-  src="/img/gb/blue_front.svg"
-  alt=""
-  class="trainer"
-/> -->
             </figure>
         </section>
         <section class="gb-layer player">
@@ -67,10 +60,11 @@
     </div>
     <div class="windows">
         <input class="panel-menu sr-only" id="panel-menu" type="checkbox"/>
-        <input class="panel-fight sr-only" id="panel-fight" type="checkbox"/>
-        <input class="panel-item sr-only" id="panel-item" type="checkbox"/>
-        <input class="panel-pkmn sr-only" id="panel-pkmn" type="checkbox"/>
-        <input class="panel-run sr-only" id="panel-run" type="checkbox"/>
+        <input class="panel-fight sr-only" value="fight" bind:group={menuGroup} id="panel-fight" type="radio"/>
+        <input class="panel-item sr-only" value="item" bind:group={menuGroup} id="panel-item" type="radio"/>
+        <input class="panel-pkmn sr-only" value="pkmn" bind:group={menuGroup} id="panel-pkmn" type="radio"/>
+        <input class="panel-run sr-only" value="run" bind:group={menuGroup} id="panel-run" type="radio"/>
+        <input class="panel-run sr-only" value="menu" bind:group={menuGroup} id="panel-cancel" type="radio"/>
         <div data-name="texts" class="window texts">
             <div class="gb-textbox">
                 <label class="text truncate" for="panel-menu"><span>Welcome to Nwp-studio</span>
@@ -93,7 +87,7 @@
                 <button class="button detail" data-fight="move0">TACKLE</button>
                 <button class="button detail" data-fight="move1">TAIL WHIP</button>
                 <button class="button" disabled>-</button>
-                <label for="panel-fight" class="button back">cancel</label>
+                <label for="panel-cancel" class="button back">cancel</label>
                 <div class="fight-details window" data-pg-name="GB_DETAIL">
                     <nav data-pg-name="GB_DET_PAN" class="gb-detail-panel">
                         <span class="type-header">TYPE/</span>
@@ -107,7 +101,7 @@
                 <div class="button potion">
                     <span>POTION x</span><span class="potionCount">1</span>
                 </div>
-                <label for="panel-item" class="button back">cancel</label>
+                <label for="panel-cancel" class="button back">cancel</label>
                 <div class="opacity-0">3</div>
                 <div class="opacity-0">4</div>
             </nav>
@@ -119,9 +113,9 @@
                 </svg>
             </figure>
             <nav class="flex flex-wrap gap-3 p-2 absolute bottom-0 right-0">
-                <label for="panel-pkmn" class="button back">action</label>
-                <label for="panel-pkmn" class="button back">rest</label>
-                <label for="panel-pkmn" class="button back">cancel</label>
+                <label for="panel-cancel" class="button back">action</label>
+                <label for="panel-cancel" class="button back">rest</label>
+                <label for="panel-cancel" class="button back">cancel</label>
             </nav>
         </header>
         <header data-name="run" class="run window">
@@ -132,7 +126,7 @@
             </figure>
             <nav class="grid grid-cols-2 gap-3 py-2 absolute bottom-0 right-0">
                 <span></span>
-                <label for="panel-run" class="button back">cancel</label>
+                <label for="panel-cancel" class="button back">cancel</label>
             </nav>
         </header>
     </div>
