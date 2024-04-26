@@ -27,7 +27,7 @@ export const sleep = (milliseconds = 1000) =>
 		return acc
 	}, [])
 } */
-/* export function clickOutside(node) {
+export function clickOutside(node) {
 	const handleClick = (event) => {
 		if (node && !node.contains(event.target) && !event.defaultPrevented) {
 			node.dispatchEvent(new CustomEvent('click_outside', node))
@@ -41,13 +41,13 @@ export const sleep = (milliseconds = 1000) =>
 			document.removeEventListener('click', handleClick, true)
 		}
 	}
-} */
-// export const randInt = (min, max) => Math.random() * (max - min) + min
-/* export const randNum = (min, max) => {
-	let m = parseInt(min),
-		n = parseInt(max)
-	return Math.floor(Math.random() * (n - m + 1)) + m
-} */
+}
+export const randInt = (min, max) => Math.random() * (max - min) + min
+export const randNum = (min, max) => {
+	min = Math.ceil(min)
+	max = Math.floor(max)
+	return Math.floor(Math.random() * (max - min)) + min
+}
 /* export const shuffle = (array) => {
 	let currentIndex = array.length
 	let temporaryValue, randomIndex
@@ -74,5 +74,4 @@ export const sleep = (milliseconds = 1000) =>
 		).toString(16)
 	)
 } */
-
 // export const distance = (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1)

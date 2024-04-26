@@ -1,21 +1,31 @@
 <script>
-	import { onMount, tick } from 'svelte'
-	import { sleep } from '$lib'
-	import { text1, text2 } from './TextBox.svelte'
+	// import { onMount, tick } from 'svelte'
+	import { fly } from 'svelte/transition'
+	import { quartOut } from 'svelte/easing'
+	import { sleep } from '../'
+	import { text1, text2, oppHp, playHp } from './'
+	import PkmnProgress from './PkmnProgress.svelte'
 	import TextBox from './TextBox.svelte'
 	let theme = 'light'
 	let typespeed = 1
-
+	let activeSubMenu = ''
+	let showBattle = false
+	let showChatbox = false
+	let showMenu = false
+	let disableIntroAnimation = false
 	function resetText() {
-		text1.set('')
-		text2.set('')
+		const d1 = $text1.length / (typespeed * 0.01)
+		const d2 = $text2.length / (typespeed * 0.01)
+		text1.set(' ')
+		text2.set(' ')
 		return new Promise((resolve) => {
-			setTimeout(resolve, 10)
+			const delay = Math.max(d1, d2) / 4
+			setTimeout(resolve, delay + 10)
 		})
 	}
-	async function logText(t1 = '', t2 = '') {
+	async function logText(t1 = ' ', t2 = ' ') {
 		const dura1 = t1.length / (typespeed * 0.01)
-		const dura2 = t1.length / (typespeed * 0.01)
+		const dura2 = t2.length / (typespeed * 0.01)
 		await resetText()
 		text1.set(t1)
 		await sleep(dura1 * 1.25)
@@ -24,96 +34,161 @@
 		return [dura1, dura2]
 	}
 
-	const welcome = async () => {
-		await sleep(1000)
-		// viewBool = false
-		// menuBool = false
-		let [dura1, dura2] = await logText(
-			'Welcome to Nwp-studio',
-			'Gameboy Battle Edition'
-		)
-		await sleep(600)
-		text2.set('')
+	const animatedLogText = async (t1 = ' ', t2 = ' ', gapdelay = 500) => {
+		// let saveHp = [[$oppHp], [$playHp]]
+		playHp.set(0)
+		oppHp.set(0)
+		await sleep(gapdelay)
+		showChatbox = true
+		await sleep(gapdelay)
+		playHp.set(0.9)
+		oppHp.set(0.85)
+		let [dura1, dura2] = await logText(t1, t2)
+		await sleep(gapdelay)
+		text2.set(' ')
 		await sleep(dura2 / 4)
-		text1.set('')
-		await sleep(dura1 / 4 + 200)
-		// menuBool = true
+		text1.set(' ')
+		await sleep(dura1 / 4 + 100)
+		showMenu = true
+		return true
 	}
-	let op1 = false
-	let activeSubMenu = ''
-	let showBattle = false
-	let showChatbox = false
-	let showMenu = false
+	const playIntroAnimation = async () => {
+		showChatbox = false
+		showMenu = false
+		if (showBattle) {
+			showBattle = false
+			await sleep(1800)
+		}
+		disableIntroAnimation = true
+		showBattle = true
+		await animatedLogText('Welcome to Nwp-studio', 'Gameboy Battle Edition')
+		disableIntroAnimation = false
+	}
+	const changeBattleMode = async (event) => {
+		if (!event.currentTarget.checked) {
+			activeSubMenu = ''
+			showMenu = false
+			showChatbox = false
+		}
+	}
 </script>
 
-{#if op1}
-	<aside class="absolute flex gap-1 left-4 nwp-gb top-4">
-		<label for="trigger-layer" class="btn btn-neutral">Layer</label>
-		<label for="trigger-chatbox" class="btn btn-neutral">Chatbox</label>
-	</aside>
-{:else}
-	<aside class="absolute right-4 nwp-gb top-4">
-		<nav class=" grid gap-1">
+<aside class="absolute right-4 top-4 nwp-gb">
+	<nav class="pkmn-ctrl">
+		<label for="showBattle">
+			<span>{showBattle ? 'End' : 'Start'} Battle</span>
 			<input
-				class="toggle gb-stat-trigger-layer"
 				bind:checked={showBattle}
-				type="checkbox" />
+				class="toggle gb-stat-trigger-layer"
+				id="showBattle"
+				type="checkbox"
+				on:change={changeBattleMode} />
+		</label>
+		<label for="showChatbox">
+			<span class:opacity-20={!showBattle}
+				>{showChatbox ? 'Hide' : 'Show'} Chatbox</span>
 			<input
-				class="toggle gb-stat-chat-box"
 				bind:checked={showChatbox}
+				class="toggle gb-stat-chat-box"
+				id="showChatbox"
 				type="checkbox"
 				on:change={(e) => {
 					if (!showChatbox) {
 						activeSubMenu = ''
 						showMenu = false
+					} else {
+						showBattle = true
 					}
 				}} />
-
+		</label>
+		<label for="showMenu">
+			<span class:opacity-20={!showChatbox}
+				>{showMenu ? 'Hide' : 'Show'} Menu</span>
 			<input
-				class="gb-stat-menu toggle"
 				bind:checked={showMenu}
+				class="gb-stat-menu toggle"
+				disabled={!showChatbox}
+				id="showMenu"
+				type="checkbox"
 				on:change={(e) => {
 					if (!showMenu) {
 						activeSubMenu = ''
 					}
-				}}
-				disabled={!showChatbox}
-				type="checkbox" />
-			<input
-				class="gb-stat-fight radio"
-				value="fight"
-				disabled={!showMenu}
-				bind:group={activeSubMenu}
-				type="radio" />
-			<input
-				class="gb-stat-item radio"
-				value="item"
-				disabled={!showMenu}
-				bind:group={activeSubMenu}
-				type="radio" />
-			<input
-				class="gb-stat-pkmn radio"
-				value="pkmn"
-				disabled={!showMenu}
-				bind:group={activeSubMenu}
-				type="radio" />
-			<input
-				class="gb-stat-run radio"
-				value="run"
-				disabled={!showMenu}
-				bind:group={activeSubMenu}
-				type="radio" />
-			<input
-				class="gb-stat-run radio radio-error"
-				value=""
-				disabled={!showChatbox}
-				bind:group={activeSubMenu}
-				type="radio" />
-		</nav>
-	</aside>
-{/if}
+				}} />
+		</label>
+		{#if showMenu}
+			<nav
+				class="pkmn-ctrl"
+				transition:fly={{
+					duration: 400,
+					x: 200,
+					easing: quartOut,
+					delay: 200
+				}}>
+				<label for="activeSubMenuFight">
+					<span>Fight Menu</span>
+					<input
+						bind:group={activeSubMenu}
+						class="gb-stat-fight radio"
+						disabled={!showMenu}
+						id="activeSubMenuFight"
+						type="radio"
+						value="fight" />
+				</label>
+				<label for="activeSubMenuItem">
+					<span>Item Menu</span>
+					<input
+						bind:group={activeSubMenu}
+						class="gb-stat-item radio"
+						disabled={!showMenu}
+						id="activeSubMenuItem"
+						type="radio"
+						value="item" />
+				</label>
+				<label for="activeSubMenuPkmn">
+					<span>Pkmn Menu</span>
+					<input
+						bind:group={activeSubMenu}
+						class="gb-stat-pkmn radio"
+						disabled={!showMenu}
+						type="radio"
+						value="pkmn"
+						id="activeSubMenuPkmn" />
+				</label>
+				<label for="activeSubMenuRun">
+					<span>Run Menu</span>
+					<input
+						bind:group={activeSubMenu}
+						class="gb-stat-run radio"
+						disabled={!showMenu}
+						type="radio"
+						value="run"
+						id="activeSubMenuRun" />
+				</label>
+				<label for="closeSubMenus">
+					<span class="text-error">Close Sub Menu</span>
+					<input
+						bind:group={activeSubMenu}
+						class="gb-stat-run radio radio-error"
+						disabled={!showChatbox}
+						id="closeSubMenus"
+						type="radio"
+						value="" />
+				</label>
+			</nav>
+		{/if}
+	</nav>
+</aside>
+<aside class="absolute right-4 bottom-4 nwp-gb">
+	<nav class="flex ggap-1">
+		<button
+			class="btn btn-neutral btn-sm"
+			disabled={disableIntroAnimation}
+			on:click={playIntroAnimation}>Animate</button>
+	</nav>
+</aside>
 
-<article class="gb4" data-theme={theme}>
+<section class="gb4" data-theme={theme}>
 	<input
 		class="sr-only trigger-chatbox"
 		bind:checked={showChatbox}
@@ -132,9 +207,7 @@
 				<div class="gb-balls"><!--x  --></div>
 				<div class="gb-stats">
 					<div class="uppercase">eevee</div>
-					<div>
-						<progress class="progress" value="40" max="100" />
-					</div>
+					<PkmnProgress value={$oppHp} />
 				</div>
 			</div>
 			<figure class="gb-images">
@@ -150,13 +223,9 @@
 			<div class="gb-info">
 				<div class="gb-stats">
 					<div class="uppercase">pikachu</div>
-					<div>
-						<progress class="progress" value="60" max="100" />
-					</div>
+					<PkmnProgress value={$playHp} />
 				</div>
-				<div class="gb-balls">
-					<!-- <img src="/img/gb/red_balls.svg" alt="" /> -->
-				</div>
+				<div class="gb-balls"><!-- x --></div>
 			</div>
 			<figure class="gb-images">
 				<svg class="battle">
@@ -201,48 +270,42 @@
 			id="panel-run"
 			type="radio" />
 		<input
-			class="panel-run sr-only"
+			class="panel-cancel sr-only"
 			value=""
 			bind:group={activeSubMenu}
 			id="panel-cancel"
 			type="radio" />
-		<div data-name="texts" class="window texts">
+		<footer class="window texts">
 			<div class="gb-textbox">
-				<label class="text truncate" for="panel-menu"
-					><span>Welcome to Nwp-studio</span>
-				</label>
-				<label class="text truncate" for="panel-menu"
-					><span>Gameboy Battle Edition</span><span
-						class="cursor-pointer font-bold ml-2 p-1 text-blue-800 uppercase"
-						>Menu</span>
-				</label>
+				<TextBox bind:text={$text1} />
+				<TextBox bind:text={$text2} />
 			</div>
-		</div>
-		<div data-name="menu" class="window menu">
-			<div class="gb-menu-compact">
+		</footer>
+		<footer class="window menu">
+			<nav class="gb-menu-compact">
 				<label for="panel-fight" class="button fight">FIGHT</label>
-				<label for="panel-pkmn" class="button pkmn"
-					><sup>P</sup> <sub>K</sub> <sup>M</sup> <sub>N</sub>
+				<label for="panel-pkmn" class="button pkmn">
+					<sup>P</sup> <sub>K</sub> <sup>M</sup> <sub>N</sub>
 				</label>
 				<label for="panel-item" class="button item">ITEM</label>
 				<label for="panel-run" class="button run">RUN</label>
-			</div>
-		</div>
-		<header data-name="fight" class="window fight">
+			</nav>
+		</footer>
+		<header class="window fight">
 			<nav data-pg-name="GB_MENU" class="gb-menu">
 				<button class="button detail" data-fight="move0">TACKLE</button>
 				<button class="button detail" data-fight="move1">TAIL WHIP</button>
 				<button class="button" disabled>-</button>
 				<label for="panel-cancel" class="button back">cancel</label>
-				<div class="fight-details window" data-pg-name="GB_DETAIL">
+				<header class="fight-details window" data-pg-name="GB_DETAIL">
 					<nav data-pg-name="GB_DET_PAN" class="gb-detail-panel">
 						<span class="type-header">TYPE/</span>
 						<span class="type">NORMAL</span>
 					</nav>
-				</div>
+				</header>
 			</nav>
 		</header>
-		<header data-name="item" class="window item">
+		<header class="window item">
 			<nav
 				data-pg-class-style="gbmenu"
 				class="grid gap-3 h-full"
@@ -255,28 +318,43 @@
 				<div class="opacity-0">4</div>
 			</nav>
 		</header>
-		<header data-name="pkmn" class="pkmn window">
-			<figure class="img-frame">
-				<svg width="171" height="171" data-width="100%" data-height="auto">
-					<use xlink:href="#pikachu_front" />
-				</svg>
-			</figure>
+		<article class="pkmn window">
+			<div class="flex justify-around py-2">
+				<figure class="img-frame">
+					<svg width="171" height="171">
+						<use xlink:href="#pikachu_front" />
+					</svg>
+				</figure>
+				<figure class="img-frame">
+					<svg width="171" height="171">
+						<use xlink:href="#red_front" />
+					</svg>
+				</figure>
+			</div>
 			<nav class="flex flex-wrap gap-3 p-2 absolute bottom-0 right-0">
 				<label for="panel-cancel" class="button back">action</label>
 				<label for="panel-cancel" class="button back">rest</label>
 				<label for="panel-cancel" class="button back">cancel</label>
 			</nav>
-		</header>
-		<header data-name="run" class="run window">
-			<figure class="img-frame">
-				<svg width="171" height="171" data-width="100%" data-height="auto">
-					<use xlink:href="#eevee_front" />
-				</svg>
-			</figure>
+		</article>
+		<article class="run window">
+			<div class="flex justify-around">
+				<figure class="img-frame">
+					<svg width="171" height="171" data-width="100%" data-height="auto">
+						<use xlink:href="#eevee_front" />
+					</svg>
+				</figure>
+
+				<figure class="img-frame">
+					<svg width="171" height="171" data-width="100%" data-height="auto">
+						<use xlink:href="#blue_front" />
+					</svg>
+				</figure>
+			</div>
 			<nav class="grid grid-cols-2 gap-3 py-2 absolute bottom-0 right-0">
 				<span />
 				<label for="panel-cancel" class="button back">cancel</label>
 			</nav>
-		</header>
+		</article>
 	</div>
-</article>
+</section>

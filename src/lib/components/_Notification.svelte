@@ -1,0 +1,34 @@
+<!--
+    The actual Notification wrapper is kept seperate from the Notifications 'manager' to prevent circular dependencies.
+-->
+<script>
+	import { each } from 'svelte/internal'
+
+	export let isOpen
+	export let maxNumberOfNotifications
+	export let payloads
+	export let removeNotification
+
+	let timeout
+	payloads.subscribe((ps) => {
+		if (timeout || !ps.length) return
+		timeout = setTimeout(() => {
+			timeout = false
+			removeNotification()
+		}, ps[0].timeout)
+	})
+
+	$: payloadsToShow = $payloads.slice(0, $maxNumberOfNotifications)
+</script>
+
+{#if $isOpen}
+	<div class="toast toast-top toast-end">
+		{#each payloadsToShow as p, notificationIndex (p)}
+			<svelte:component
+				this={p.component}
+				{...p.props}
+				{notificationIndex}
+				{removeNotification} />
+		{/each}
+	</div>
+{/if}

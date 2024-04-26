@@ -1,9 +1,9 @@
 <script>
 	import { onMount } from 'svelte'
 	import {theme} from './lib'
-	import Router from 'svelte-spa-router'
-	import GbSprite from './lib/GbSprite.svelte'
 	import AppBar from './lib/AppBar.svelte'
+	import Router from 'svelte-spa-router'
+	import SvgSprites from './lib/SvgSprites.svelte';
 	import Start from './routes/Start.svelte'
 	import P1 from './routes/P1.svelte'
 	import P2 from './routes/P2.svelte'
@@ -23,4 +23,4 @@
 <main data-theme={$theme} class="main">
 	<Router {routes} />
 </main>
-<GbSprite />
+<SvgSprites />

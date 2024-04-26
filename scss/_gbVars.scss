@@ -63,13 +63,13 @@
 	--gb-offset-h: #{$chatbox-height};
 	--gb-offset-del: #{$offset-del};
 	--gb-offset-dur: #{$offset-dur};
-	--gb-img-frame-w: calc(var(--gb-win-width) * 0.3);
+	--gb-img-frame-w: calc(#{$page-size} * 0.45);
 	// Layers Info/Image
 	--gb-layer-change-dura: #{$layer-change-dura};
 	--gb-img-frame-wrapp-dura: #{$img-frame-wrapp-dura};
+	--gb-img-frame-wrapp-w: calc(#{$page-size} * 0.4);
+	--gb-info-frame-w: calc(#{$page-size} * 0.4);
 	--gb-img-frame-wrapp-delay: 0s;
-	--gb-img-frame-wrapp-w: calc(var(--gb-win-width) * 0.4);
-	--gb-info-frame-w: calc(var(--gb-win-width) * 0.4);
 	--gb-win-offset-y: 0px;
 	// Colors
 	--gb-bg-base: #ad9d42;
