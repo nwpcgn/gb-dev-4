@@ -1,8 +1,24 @@
 <script>
+	import { iconlist } from './'
+	import { onMount } from 'svelte'
+	import IconsSprite from './pokemon/IconsSprite.svelte'
 	import PkmnSprite from './pokemon/PkmnSprite.svelte'
+	import Pkmn2Sprite from './pokemon/Pkmn2Sprite.svelte'
+	let elem
+
+	onMount(() => {
+		let qe = elem.querySelectorAll('symbol')
+		let list = []
+		qe.forEach((element) => {
+			list.push(element.id)
+		})
+		iconlist.set(list)
+		// console.log({ list })
+	})
 </script>
 
 <svg
+	bind:this={elem}
 	width="0"
 	height="0"
 	fill="none"
@@ -19,4 +35,6 @@
 			d="M16 14.115l6.6-6.6 1.886 1.886-6.6 6.6 6.6 6.6-1.886 1.886-6.6-6.6-6.6 6.6-1.886-1.886 6.6-6.6-6.6-6.6 1.886-1.886 6.6 6.6z" />
 	</symbol>
 	<PkmnSprite />
+	<Pkmn2Sprite />
+	<IconsSprite />
 </svg>

@@ -1,0 +1,247 @@
+[
+	{
+		"name": "quilava",
+		"health": 80,
+		"maxHealth": 80,
+		"battle": {
+			"hard": {
+				"damage": 8,
+				"dice": 5
+			},
+			"weak": {
+				"damage": 3,
+				"dice": 2
+			}
+		},
+		"attacks": [
+			{
+				"name": "snore",
+				"damage": 15,
+				"dice": 4,
+				"fail": "The enemy dodges your snore attack",
+				"msg": "You are trying to attack with snore"
+			},
+			{
+				"name": "flame-charge",
+				"damage": 3,
+				"dice": 4,
+				"fail": "The enemy dodges your flame-charge attack",
+				"msg": "You are trying to attack with flame-charge"
+			}
+		],
+		"images": {
+			"front": "pkmn-112b",
+			"back": "pkmn-112"
+		}
+	},
+	{
+		"name": "elekid",
+		"health": 80,
+		"maxHealth": 80,
+		"battle": {
+			"hard": {
+				"damage": 8,
+				"dice": 6
+			},
+			"weak": {
+				"damage": 3,
+				"dice": 3
+			}
+		},
+		"attacks": [
+			{
+				"name": "zap-cannon",
+				"damage": 4,
+				"dice": 4,
+				"fail": "The enemy dodges your zap-cannon attack",
+				"msg": "You are trying to attack with zap-cannon"
+			},
+			{
+				"name": "psychic",
+				"damage": 5,
+				"dice": 3,
+				"fail": "The enemy dodges your psychic attack",
+				"msg": "You are trying to attack with psychic"
+			}
+		],
+		"images": {
+			"front": "pkmn-146b",
+			"back": "pkmn-146"
+		}
+	},
+	{
+		"name": "spoink",
+		"health": 80,
+		"maxHealth": 80,
+		"battle": {
+			"hard": {
+				"damage": 5,
+				"dice": 5
+			},
+			"weak": {
+				"damage": 3,
+				"dice": 2
+			}
+		},
+		"attacks": [
+			{
+				"name": "magic-coat",
+				"damage": 4,
+				"dice": 4,
+				"fail": "The enemy dodges your magic-coat attack",
+				"msg": "You are trying to attack with magic-coat"
+			},
+			{
+				"name": "lunge",
+				"damage": 5,
+				"dice": 4,
+				"fail": "The enemy dodges your lunge attack",
+				"msg": "You are trying to attack with lunge"
+			}
+		],
+		"images": {
+			"front": "pkmn-112b",
+			"back": "pkmn-112"
+		}
+	},
+	{
+		"name": "rattata",
+		"health": 80,
+		"maxHealth": 80,
+		"battle": {
+			"hard": {
+				"damage": 5,
+				"dice": 4
+			},
+			"weak": {
+				"damage": 2,
+				"dice": 1
+			}
+		},
+		"attacks": [
+			{
+				"name": "attract",
+				"damage": 5,
+				"dice": 2,
+				"fail": "The enemy dodges your attract attack",
+				"msg": "You are trying to attack with attract"
+			},
+			{
+				"name": "skull-bash",
+				"damage": 5,
+				"dice": 2,
+				"fail": "The enemy dodges your skull-bash attack",
+				"msg": "You are trying to attack with skull-bash"
+			}
+		],
+		"images": {
+			"front": "pkmn-112b",
+			"back": "pkmn-112"
+		}
+	},
+	{
+		"name": "mightyena",
+		"health": 80,
+		"maxHealth": 80,
+		"battle": {
+			"hard": {
+				"damage": 8,
+				"dice": 5
+			},
+			"weak": {
+				"damage": 3,
+				"dice": 2
+			}
+		},
+		"attacks": [
+			{
+				"name": "snatch",
+				"damage": 4,
+				"dice": 2,
+				"fail": "The enemy dodges your snatch attack",
+				"msg": "You are trying to attack with snatch"
+			},
+			{
+				"name": "spite",
+				"damage": 3,
+				"dice": 2,
+				"fail": "The enemy dodges your spite attack",
+				"msg": "You are trying to attack with spite"
+			}
+		],
+		"images": {
+			"front": "pkmn-112b",
+			"back": "pkmn-112"
+		}
+	},
+	{
+		"name": "metapod",
+		"health": 80,
+		"maxHealth": 80,
+		"battle": {
+			"hard": {
+				"damage": 6,
+				"dice": 4
+			},
+			"weak": {
+				"damage": 2,
+				"dice": 1
+			}
+		},
+		"attacks": [
+			{
+				"name": "iron-defense",
+				"damage": 5,
+				"dice": 3,
+				"fail": "The enemy dodges your iron-defense attack",
+				"msg": "You are trying to attack with iron-defense"
+			},
+			{
+				"name": "bug-bite",
+				"damage": 4,
+				"dice": 3,
+				"fail": "The enemy dodges your bug-bite attack",
+				"msg": "You are trying to attack with bug-bite"
+			}
+		],
+		"images": {
+			"front": "pkmn-112b",
+			"back": "pkmn-112"
+		}
+	},
+	{
+		"name": "wynaut",
+		"health": 80,
+		"maxHealth": 80,
+		"battle": {
+			"hard": {
+				"damage": 7,
+				"dice": 5
+			},
+			"weak": {
+				"damage": 4,
+				"dice": 2
+			}
+		},
+		"attacks": [
+			{
+				"name": "amnesia",
+				"damage": 3,
+				"dice": 4,
+				"fail": "The enemy dodges your amnesia attack",
+				"msg": "You are trying to attack with amnesia"
+			},
+			{
+				"name": "destiny-bond",
+				"damage": 4,
+				"dice": 2,
+				"fail": "The enemy dodges your destiny-bond attack",
+				"msg": "You are trying to attack with destiny-bond"
+			}
+		],
+		"images": {
+			"front": "pkmn-112b",
+			"back": "pkmn-112"
+		}
+	}
+]

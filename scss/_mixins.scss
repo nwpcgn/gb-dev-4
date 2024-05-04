@@ -1,0 +1,39 @@
+@mixin devBorder($color: red) {
+	border: 1px dashed $color;
+}
+@mixin visualShow() {
+	opacity: 1;
+	visibility: visible;
+	height: auto;
+	transition-delay: 0s, 0s, var(--gb-layer-change-dura);
+}
+@mixin visualHide() {
+	opacity: 0;
+	visibility: hidden;
+	height: 0;
+	overflow: hidden;
+	transition: opacity var(--gb-layer-change-dura) ease,
+		visibility 0s var(--gb-layer-change-dura),
+		height var(--gb-layer-change-dura) ease;
+}
+@mixin visualShow2() {
+	display: block;
+}
+@mixin visualHide2() {
+	display: none;
+}
+@font-face {
+	font-family: 'Pokemon';
+	src: url('/fonts/pokemon-normal.woff2') format('woff2'),
+		url('/fonts/pokemon-normal.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Pokemon';
+	src: url('/fonts/pokemon-italic.woff2') format('woff2'),
+		url('/fonts/pokemon-italic.woff') format('woff');
+	font-weight: 400;
+	font-style: italic;
+}

@@ -28,6 +28,7 @@
 	stroke: currentColor;
 	fill: currentColor;
 }
+
 .nwp-icon-20 {
-	font-size: 22px;
+	font-size: var(--fs, 22px);
 }

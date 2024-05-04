@@ -1,5 +1,6 @@
 import { writable, derived } from 'svelte/store'
 
+export const iconlist = writable([])
 export const theme = writable('dim')
 export const stage = writable()
 export const canvas = derived(stage, ($stage, set) => {
@@ -41,6 +42,26 @@ export function clickOutside(node) {
 			document.removeEventListener('click', handleClick, true)
 		}
 	}
+}
+export async function fetchData(url) {
+	try {
+		const res = await fetch(url)
+		const data = await res.json()
+		return data
+	} catch (error) {
+		throw new Error(error)
+	}
+}
+export function copyToClip(text) {
+	// const text = "Example text to appear on clipboard";
+	return navigator.clipboard.writeText(text).then(
+		function () {
+			console.log('Copying to clipboard was successful!', text.length)
+		},
+		function (err) {
+			console.error('Async: Could not copy text: ', err)
+		}
+	)
 }
 export const randInt = (min, max) => Math.random() * (max - min) + min
 export const randNum = (min, max) => {

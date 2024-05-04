@@ -3,7 +3,7 @@
 	import GbImages from './GbImages.svelte'
 
 	import { colorPalette } from './'
-		let imgList = [
+	let imgList = [
 		{
 			id: 1,
 			name: 'gb-ball-empty',
@@ -145,50 +145,47 @@
 			height: 13
 		}
 	]
-let frameW = 0
-let imgW = 247
-let scale = 1
+	let frameW = 0
+	let imgW = 247
+	let scale = 1
 
-function calcScale() {
-  scale = (frameW / imgW).toFixed(1)
-}
+	function calcScale() {
+		scale = (frameW / imgW).toFixed(1)
+	}
 
-function copyToClip(text) {
-  // const text = "Example text to appear on clipboard";
-  return navigator.clipboard.writeText(text).then(
-    function () {
-      console.log("Async: Copying to clipboard was successful!", text);
-    },
-    function (err) {
-      console.error("Async: Could not copy text: ", err);
-    }
-  );
-}
+	function copyToClip(text) {
+		// const text = "Example text to appear on clipboard";
+		return navigator.clipboard.writeText(text).then(
+			function () {
+				console.log('Async: Copying to clipboard was successful!', text)
+			},
+			function (err) {
+				console.error('Async: Could not copy text: ', err)
+			}
+		)
+	}
 
+	function copyText(e) {
+		// const text = "Example text to appear on clipboard";
+		let el1 = e.currentTarget
+		const obj = {
+			id: el1.id,
+			fill: el1.getAttribute('fill'),
+			stroke: el1.getAttribute('stroke'),
+			x: el1.getBoundingClientRect().x,
+			y: el1.getBoundingClientRect().y,
+			w: el1.getBoundingClientRect().width,
+			h: el1.getBoundingClientRect().height
+		}
+		copyToClip(obj.fill).then(() => alert(`--gb-${obj.id}: ${obj.fill};`))
+	}
 
-
-function copyText(e) {
-  // const text = "Example text to appear on clipboard";
-  let el1 = e.currentTarget
-  const obj = {
-      id: el1.id,
-      fill: el1.getAttribute("fill"),
-      stroke: el1.getAttribute("stroke"),
-      x: el1.getBoundingClientRect().x,
-      y: el1.getBoundingClientRect().y,
-      w: el1.getBoundingClientRect().width,
-      h: el1.getBoundingClientRect().height,
-    };
-    copyToClip(obj.fill).then(() => alert(`--gb-${obj.id}: ${obj.fill};`));
-  
-}
-
-$: calcScale(frameW)
-
+	$: calcScale(frameW)
 </script>
 
-
-<article bind:clientWidth={frameW} class="absolute inset-0 overflow-hidden flex flex-col">
+<article
+	bind:clientWidth={frameW}
+	class="absolute inset-0 overflow-hidden flex flex-col">
 	<TabControl>
 		<div class="content tabs tabs-bordered" slot="tabs" let:tabs>
 			{#each tabs as { active, disabled, payload, select }}
@@ -205,90 +202,95 @@ $: calcScale(frameW)
 			<TabControlItem id="P" payload="Picker" active>
 				<section class="layer nwp">
 					<article class="content">
-          <div>Scale: {scale}</div>
-                  <div>
-                  <svg width="100%" height="auto" viewBox="0 0 280 40">
-                    <defs>
-                      <path d="M280 0L280 0L280 40L0 40L0 0L280 0Z" id="path_1" />
-                      <clipPath id="clip_1">
-                        <use
-                          xlink:href="#path_1"
-                          clip-rule="evenodd"
-                          fill-rule="evenodd" />
-                      </clipPath>
-                    </defs>
-                    <g id="color-bar">
-                      <path
-                        d="M280 0L280 0L280 40L0 40L0 0L280 0Z"
-                        id="color-bar"
-                        fill="none"
-                        stroke="none" />
-                      <g id="gb" clip-path="url(#clip_1)">
-                        <path
-                        on:pointerdown={copyText}
-                          data-pick="#303C17"
-                          d="M0 0L40 0L40 40L0 40L0 0Z"
-                          id="bg-base"
-                          fill="#AD9D42"
-                          fill-rule="evenodd"
-                          stroke="none" />
-                        <path on:pointerdown={copyText}
-                          data-pick="#303C17"
-                          d="M40 0L80 0L80 40L40 40L40 0Z"
-                          id="bg-secondary"
-                          fill="#979797"
-                          fill-rule="evenodd"
-                          stroke="none" />
-                        <path on:pointerdown={copyText}
-                          data-pick="#303C17"
-                          d="M80 0L120 0L120 40L80 40L80 0Z"
-                          id="text-secondary"
-                          fill="#585A26"
-                          fill-rule="evenodd"
-                          stroke="none" />
-                        <path on:pointerdown={copyText}
-                          data-pick="#979797"
-                          d="M120 0L160 0L160 40L120 40L120 0Z"
-                          id="text-base"
-                          fill="#303C17"
-                          fill-rule="evenodd"
-                          stroke="none" />
-                        <path on:pointerdown={copyText}
-                          data-pick="#979797"
-                          d="M160 0L200 0L200 40L160 40L160 0Z"
-                          id="text-contrast"
-                          fill="#252F0F"
-                          fill-rule="evenodd"
-                          stroke="none" />
-                        <path on:pointerdown={copyText}
-                          data-pick="#979797"
-                          d="M200 0L240 0L240 40L200 40L200 0Z"
-                          id="text-disabled"
-                          fill="#585A26"
-                          fill-rule="evenodd"
-                          stroke="none" />
-                        <path on:pointerdown={copyText}
-                          data-pick="#979797"
-                          d="M240 0L280 0L280 40L240 40L240 0Z"
-                          id="bg-contrast"
-                          fill="#252F0F"
-                          fill-rule="evenodd"
-                          stroke="none" />
-                      </g>
-                    </g>
-                  </svg>
-                  </div>
-          <div>
-          <h2>Images</h2>
-         <div>
-{#each imgList as {id,name,xlink,width,height}}
-<span class="border">
-	 <svg><use xlink:href={xlink}></use></svg>
-</span>
-{/each}
-          </div> 
-          </div>
-				
+						<div>Scale: {scale}</div>
+						<div>
+							<svg width="100%" height="auto" viewBox="0 0 280 40">
+								<defs>
+									<path d="M280 0L280 0L280 40L0 40L0 0L280 0Z" id="path_1" />
+									<clipPath id="clip_1">
+										<use
+											xlink:href="#path_1"
+											clip-rule="evenodd"
+											fill-rule="evenodd" />
+									</clipPath>
+								</defs>
+								<g id="color-bar">
+									<path
+										d="M280 0L280 0L280 40L0 40L0 0L280 0Z"
+										id="color-bar"
+										fill="none"
+										stroke="none" />
+									<g id="gb" clip-path="url(#clip_1)">
+										<path
+											on:pointerdown={copyText}
+											data-pick="#303C17"
+											d="M0 0L40 0L40 40L0 40L0 0Z"
+											id="bg-base"
+											fill="#AD9D42"
+											fill-rule="evenodd"
+											stroke="none" />
+										<path
+											on:pointerdown={copyText}
+											data-pick="#303C17"
+											d="M40 0L80 0L80 40L40 40L40 0Z"
+											id="bg-secondary"
+											fill="#979797"
+											fill-rule="evenodd"
+											stroke="none" />
+										<path
+											on:pointerdown={copyText}
+											data-pick="#303C17"
+											d="M80 0L120 0L120 40L80 40L80 0Z"
+											id="text-secondary"
+											fill="#585A26"
+											fill-rule="evenodd"
+											stroke="none" />
+										<path
+											on:pointerdown={copyText}
+											data-pick="#979797"
+											d="M120 0L160 0L160 40L120 40L120 0Z"
+											id="text-base"
+											fill="#303C17"
+											fill-rule="evenodd"
+											stroke="none" />
+										<path
+											on:pointerdown={copyText}
+											data-pick="#979797"
+											d="M160 0L200 0L200 40L160 40L160 0Z"
+											id="text-contrast"
+											fill="#252F0F"
+											fill-rule="evenodd"
+											stroke="none" />
+										<path
+											on:pointerdown={copyText}
+											data-pick="#979797"
+											d="M200 0L240 0L240 40L200 40L200 0Z"
+											id="text-disabled"
+											fill="#585A26"
+											fill-rule="evenodd"
+											stroke="none" />
+										<path
+											on:pointerdown={copyText}
+											data-pick="#979797"
+											d="M240 0L280 0L280 40L240 40L240 0Z"
+											id="bg-contrast"
+											fill="#252F0F"
+											fill-rule="evenodd"
+											stroke="none" />
+									</g>
+								</g>
+							</svg>
+						</div>
+						<div>
+							<h2>Images</h2>
+							<div>
+								{#each imgList as { id, name, xlink, width, height }}
+									<span class="border">
+										<svg><use xlink:href={xlink} /></svg>
+									</span>
+								{/each}
+							</div>
+						</div>
 					</article>
 				</section>
 			</TabControlItem>
@@ -311,17 +313,19 @@ $: calcScale(frameW)
 			<TabControlItem id="H" payload="Images">
 				<section class="layer nwp">
 					<article class="content">
-            <details class="collapse bg-base-100" >
-              <summary class="collapse-title text-xl font-medium">Show Json List</summary>
-              <div class="collapse-content"> 
-                <div class="mockup-code">
-                          <pre class="text-warning">{JSON.stringify(imgList, null, '    ')}</pre>
-                        </div>
-
-              </div>
-            </details>
-					
-
+						<details class="collapse bg-base-100">
+							<summary class="collapse-title text-xl font-medium"
+								>Show Json List</summary>
+							<div class="collapse-content">
+								<div class="mockup-code">
+									<pre class="text-warning">{JSON.stringify(
+											imgList,
+											null,
+											'    '
+										)}</pre>
+								</div>
+							</div>
+						</details>
 					</article>
 				</section>
 			</TabControlItem>

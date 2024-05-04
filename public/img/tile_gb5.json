@@ -1,0 +1,15 @@
+{
+	"columns": 9,
+	"image": "tile_gb5.png",
+	"imageheight": 320,
+	"imagewidth": 576,
+	"margin": 0,
+	"name": "tile_gb5",
+	"spacing": 0,
+	"tilecount": 45,
+	"tiledversion": "1.10.2",
+	"tileheight": 64,
+	"tilewidth": 64,
+	"type": "tileset",
+	"version": "1.10"
+}
