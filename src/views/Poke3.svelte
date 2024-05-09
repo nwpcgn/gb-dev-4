@@ -1,5 +1,5 @@
 <script>
-	import GbKeyboard from './GbKeyboard.svelte'
+	import GbKeyboard from './tiles/GbKeyboard.svelte'
 	import { sleep, fetchData } from '../lib'
 	import { onMount, tick } from 'svelte'
 	import { Loader, Hero } from './tiles/utils'
@@ -41,11 +41,17 @@
 		}
 	}
 	let map = {
+		heroSize: 32,
 		atlasCols: 9,
 		cols: 8,
 		rows: 8,
 		tsize: 64,
 		layers: [
+			[
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 40, 40, 0, 0, 0, 0, 0, 40, 40, 0,
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+			],
 			[
 				1, 2, 2, 2, 2, 2, 2, 3, 10, 11, 11, 11, 11, 11, 11, 12, 10, 11, 11, 11,
 				11, 11, 11, 12, 10, 11, 11, 11, 11, 11, 11, 12, 10, 11, 11, 11, 11, 11,
@@ -54,8 +60,8 @@
 			],
 			[
 				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 11, 11, 11, 11, 0, 0, 0, 0, 24, 24, 24, 11, 0, 0, 0, 0, 24, 24,
-				24, 11, 0, 0, 0, 0, 23, 24, 22, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 29, 38, 0, 0, 0, 0, 0, 37, 28, 39,
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 			]
 		],
 		getTile: function (layer, col, row) {
@@ -70,7 +76,7 @@
 			return this.layers.reduce(
 				function (res, layer, index) {
 					const tile = this.getTile(index, col, row)
-					const isSolid = tile === 3 || tile === 5
+					const isSolid = tile === 40 || tile === 41
 					return res || isSolid
 				}.bind(this),
 				false
@@ -149,6 +155,7 @@
 	Game.render = function () {
 		this._drawLayer(0)
 		this._drawLayer(1)
+		this._drawLayer(2)
 		this.ctx.drawImage(
 			this.hero.image,
 			this.hero.spriteX,
@@ -160,7 +167,6 @@
 			this.hero.spriteWidth,
 			this.hero.spriteHeight
 		)
-		
 	}
 
 	onMount(async () => {

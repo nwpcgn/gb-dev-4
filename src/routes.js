@@ -5,6 +5,8 @@ import NotFound from './views/NotFound.svelte'
 import Poke1 from './views/Poke1.svelte'
 import Poke2 from './views/Poke2.svelte'
 import Poke3 from './views/Poke3.svelte'
+import Poke4 from './views/Poke4.svelte'
+import Poke5 from './views/Poke5.svelte'
 import Start from './views/Start.svelte'
 // @endindex
 
@@ -24,6 +26,14 @@ export const nav = [
 	{
 		name: 'Pkmn 3',
 		item: '/pkmn3'
+	},
+	{
+		name: 'Pkmn 4',
+		item: '/pkmn4'
+	},
+	{
+		name: 'Pkmn 5',
+		item: '/pkmn5'
 	}
 ]
 
@@ -43,6 +53,14 @@ export const routes = {
 	'/pkmn3': wrap({
 		component: Poke3,
 		props: { name: 'Nwp-Studio', sub: 'Tiles', nav }
+	}),
+	'/pkmn4': wrap({
+		component: Poke4,
+		props: { name: 'Nwp-Studio', sub: 'Canvas', nav }
+	}),
+	'/pkmn5': wrap({
+		component: Poke5,
+		props: { name: 'Nwp-Studio', sub: 'GB-Battle 3', nav }
 	}),
 	'*': NotFound
 }

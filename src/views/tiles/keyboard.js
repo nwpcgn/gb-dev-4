@@ -10,11 +10,7 @@ class Keyboard {
 			39: false,
 			40: false
 		}
-
-
 	}
-
-	
 
 	_onKeyDown(event) {
 		const keyCode = event.keyCode

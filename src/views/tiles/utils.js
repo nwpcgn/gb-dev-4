@@ -32,8 +32,8 @@ export class Hero {
 		this.map = map
 		this.x = x
 		this.y = y
-		this.width = map.tsize
-		this.height = map.tsize
+		this.width = map.heroSize
+		this.height = map.heroSize
 		this.spriteX = spriteX
 		this.spriteY = spriteY
 		this.spriteWidth = spriteWidth
@@ -50,8 +50,8 @@ export class Hero {
 		this._collide(dirx, diry)
 
 		// clamp values
-		let maxX = (this.map.cols * this.map.tsize) - this.spriteWidth
-		let maxY = (this.map.rows * this.map.tsize) - this.spriteHeight
+		let maxX = this.map.cols * this.map.tsize - 16
+		let maxY = this.map.rows * this.map.tsize - 16
 		// console.log({maxX,maxY, x: this.x, y: this.y});
 		this.x = Math.max(0, Math.min(this.x, maxX))
 		this.y = Math.max(0, Math.min(this.y, maxY))

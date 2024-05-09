@@ -1,0 +1,15 @@
+{
+	"columns": 23,
+	"image": "./img/tower.png",
+	"imageheight": 832,
+	"imagewidth": 1472,
+	"margin": 0,
+	"name": "tower",
+	"spacing": 0,
+	"tilecount": 299,
+	"tiledversion": "1.10.2",
+	"tileheight": 64,
+	"tilewidth": 64,
+	"type": "tileset",
+	"version": "1.10"
+}
